@@ -42,14 +42,14 @@ Window {
                 id: titleBar
                 z: D.DTK.TopOrder
                 sourceComponent: DialogTitleBar {
-                    enableInWindowBlendBlur: false // TODO blur anomaly in qt6.
+                    enableInWindowBlendBlur: true
                     icon.name: control.icon
                 }
             }
 
             Item {
                 id: contentLoader
-                Layout.fillWidth: true
+                Layout.preferredWidth: childrenRect.width
                 Layout.preferredHeight: childrenRect.height
                 Layout.leftMargin: DS.Style.dialogWindow.contentHMargin
                 Layout.rightMargin: DS.Style.dialogWindow.contentHMargin
