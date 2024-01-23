@@ -27,7 +27,7 @@ DQuickDciIconImageItemPrivate::DQuickDciIconImageItemPrivate(DQuickDciIconImageP
 void DQuickDciIconImageItemPrivate::maybeUpdateUrl()
 {
     Q_Q(DQuickIconImage);
-    if (parentPriv->name.isEmpty()) {
+    if (parentPriv->imageItem->name().isEmpty() || iconType != ThemeIconName) {
         return DQuickIconImagePrivate::maybeUpdateUrl();
     }
 
@@ -41,9 +41,10 @@ void DQuickDciIconImageItemPrivate::maybeUpdateUrl()
 QUrlQuery DQuickDciIconImageItemPrivate::getUrlQuery()
 {
     QUrlQuery query;
-    query.addQueryItem(QLatin1String("name"), parentPriv->name);
+    query.addQueryItem(QLatin1String("name"), parentPriv->imageItem->name());
     query.addQueryItem(QLatin1String("mode"), QString::number(parentPriv->mode));
     query.addQueryItem(QLatin1String("theme"), QString::number(parentPriv->theme));
+    query.addQueryItem(QLatin1String("themeName"), QIcon::themeName());
     DDciIconPalette pal = parentPriv->palette;
     if (!parentPriv->palette.foreground().isValid() && q_func()->color().isValid()) {
         pal.setForeground(q_func()->color());
@@ -59,6 +60,7 @@ DQuickDciIconImagePrivate::DQuickDciIconImagePrivate(DQuickDciIconImage *qq)
     : DObjectPrivate(qq)
     , imageItem(new DQuickIconImage(*new DQuickDciIconImageItemPrivate(this), qq))
 {
+    QObject::connect(imageItem, &DQuickIconImage::nameChanged, qq, &DQuickDciIconImage::nameChanged);
 }
 
 void DQuickDciIconImagePrivate::layout()
@@ -87,18 +89,13 @@ DQuickDciIconImage::~DQuickDciIconImage()
 QString DQuickDciIconImage::name() const
 {
     D_DC(DQuickDciIconImage);
-    return d->name;
+    return d->imageItem->name();
 }
 
 void DQuickDciIconImage::setName(const QString &name)
 {
     D_D(DQuickDciIconImage);
-    if (d->name == name)
-        return;
-
-    d->name = name;
-    d->updateImageSourceUrl();
-    Q_EMIT nameChanged();
+    d->imageItem->setName(name);
 }
 
 DQMLGlobalObject::ControlState DQuickDciIconImage::mode() const
