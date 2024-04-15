@@ -232,6 +232,14 @@ public:
     static void setPopupMode(const PopupMode mode);
     static bool loadTranslator();
 
+#if QT_VERSION_MAJOR > 5
+    static QSGRootNode *getRootNode(QQuickItem *item);
+    static int &QSGNode_subtreeRenderableCount(QSGNode *node);
+    static QSGNode* &QSGNode_firstChild(QSGNode *node);
+    static QSGNode* &QSGNode_lastChild(QSGNode *node);
+    static QSGNode* &QSGNode_parent(QSGNode *node);
+#endif
+
 Q_SIGNALS:
     void hasBlurWindowChanged();
     void hasCompositeChanged();

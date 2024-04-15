@@ -18,7 +18,7 @@ Control {
     // corner radius
     property int radius: DS.Style.floatingPanel.radius
     // blur radius
-    property int blurRadius: DS.Style.floatingPanel.radius
+    property int blurRadius: 64
 
     background: D.InWindowBlur {
         id: blur
