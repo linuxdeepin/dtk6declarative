@@ -12,14 +12,16 @@ Item {
     property alias radius: blur.blurMax
     property alias content: blur
     default property alias data: blitter.data
+    readonly property bool valid: blitter.blitterEnabled
 
     D.BackdropBlitter {
         id: blitter
         anchors.fill: parent
+        blitterEnabled: !D.DTK.isSoftwareRender
 
         MultiEffect {
             id: blur
-            visible: !control.offscreen
+            visible: blitter.blitterEnabled && !control.offscreen
             anchors.fill: parent
             source: blitter.content
             autoPaddingEnabled: false

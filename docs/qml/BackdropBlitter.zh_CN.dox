@@ -11,6 +11,8 @@ BackdropBlitter 会自动创建一个新的 QRhi 对象，并且将自身的子�
 
 支持为 BackdropBlitter 应用 clip opacity rotaion transform scale 等属性。
 
+\warning 仅在 Qt6 版本中提供，Qt5 的版本请使用 @sa BlitFramebuffer 代替。
+
 @property bool BackdropBlitter::offscreen
 @brief offscreen 属性表示是否将捕获到的结果再次渲染到窗口中
 @details 其将决定 @sa BackdropBlitter::content 对象的 @sa QQuickItem::ItemHasContents 标志，如果为 false，则表示希望将捕获到的内容渲染到屏幕上，否则表示不渲染（通过 @sa QQuickItem::textureProvider 使用）。
@@ -20,4 +22,7 @@ BackdropBlitter 会自动创建一个新的 QRhi 对象，并且将自身的子�
 @brief content 属性是捕获到的资源的所有对象
 @details 可以将此对象用于 @sa MultiEffect::source 等可以把一个 Item 作为输入源的地方。其通过 QQuickItem::textureProvider 和 QQuickItem::updatePaintNode（需要将 @sa BackdropBlitter::offscreen 指定为 false）两种方式提供捕获到的资源。
 
+@property bool BackdropBlitter::blitterEnabled
+@brief blitterEnabled 属性用于控制是否开启背景内容捕获行为
+@details 当为 true 时将开启背景捕获，否则不开启，在不开启时，可以将 BackdropBlitter 当作一个 Item 对象看待。此属性默认为 true。
 */

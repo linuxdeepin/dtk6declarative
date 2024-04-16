@@ -575,6 +575,11 @@ QtObject {
             normalDark: behindWindowBlur.darkColor
         }
 
+        property D.Palette backgroundNoBlur: D.Palette {
+            normal: behindWindowBlur.lightNoBlurColor
+            normalDark: behindWindowBlur.darkNoBlurColor
+        }
+
         property D.Palette dropShadow: D.Palette {
             normal: Qt.rgba(0, 0, 0, 0.2)
             normalDark: Qt.rgba(0, 0, 0, 0.2)
@@ -653,6 +658,11 @@ QtObject {
             normalDark: behindWindowBlur.darkColor
         }
 
+        property D.Palette backgroundNoBlur: D.Palette {
+            normal: behindWindowBlur.lightNoBlurColor
+            normalDark: behindWindowBlur.darkNoBlurColor
+        }
+
         property D.Palette subMenuOpenedBackground: D.Palette {
             normal: Qt.rgba(0, 0, 0, 0.15)
         }
@@ -706,6 +716,8 @@ QtObject {
         property color darkInBorderColor: Qt.rgba(1, 1, 1, 0.8)
         property color backgroundColor: behindWindowBlur.lightColor
         property color darkBackgroundColor: behindWindowBlur.darkColor
+        property color backgroundNoBlurColor: behindWindowBlur.lightNoBlurColor
+        property color darkBackgroundNoBlurColor: behindWindowBlur.darkNoBlurColor
         property color shadowColor: Qt.rgba(0, 0, 0, 0.2)
         property color darkShadowColor: Qt.rgba(0, 0, 0, 0.2)
     }

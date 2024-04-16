@@ -12,6 +12,7 @@ Control {
     padding: DS.Style.floatingPanel.radius / 2
 
     property D.Palette backgroundColor: DS.Style.floatingPanel.background
+    property D.Palette backgroundNoBlurColor: DS.Style.floatingPanel.backgroundNoBlur
     property D.Palette dropShadowColor: DS.Style.floatingPanel.dropShadow
     property D.Palette outsideBorderColor: DS.Style.floatingPanel.outsideBorder
     property D.Palette insideBorderColor: DS.Style.floatingPanel.insideBorder
@@ -50,7 +51,8 @@ Control {
             id: backgroundRect
             anchors.fill: parent
             radius: control.radius
-            color: control.D.ColorSelector.backgroundColor
+            color: blur.valid ? control.D.ColorSelector.backgroundColor
+                              : control.D.ColorSelector.backgroundNoBlurColor
         }
 
         Loader {

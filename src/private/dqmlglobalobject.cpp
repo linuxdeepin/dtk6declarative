@@ -216,7 +216,7 @@ bool DQMLGlobalObject::hasNoTitlebar() const
     return DWindowManagerHelper::instance()->hasNoTitlebar();
 }
 
-bool DQMLGlobalObject::isSoftwareRender() const
+bool DQMLGlobalObject::isSoftwareRender()
 {
     static bool isSoftware = QQuickWindow::sceneGraphBackend() == QLatin1String("software");
     return isSoftware;

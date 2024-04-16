@@ -6,6 +6,7 @@
 #include "dbackdropnode_p.h"
 
 #include <DObjectPrivate>
+#include <dqmlglobalobject_p.h>
 
 #include <QSGImageNode>
 #include <QSGTextureProvider>
@@ -48,6 +49,7 @@ public:
     }
 
     void init();
+    void onBlitterEnabledChanged();
 
     inline QQmlListProperty<QObject> data() {
         if (!container)
@@ -143,9 +145,23 @@ void DQuickBackdropBlitterPrivate::init()
 
     if (q->window()->graphicsApi() != QSGRendererInterface::Software) {
         container = new QQuickItem(q);
+        onBlitterEnabledChanged();
+    }
+}
 
-        auto d = QQuickItemPrivate::get(container);
+void DQuickBackdropBlitterPrivate::onBlitterEnabledChanged()
+{
+    D_Q(DQuickBackdropBlitter);
+
+    if (!container)
+        return;
+
+    auto d = QQuickItemPrivate::get(container);
+
+    if (q->blitterEnabled()) {
         d->refFromEffectItem(true);
+    } else {
+        d->derefFromEffectItem(true);
     }
 }
 
@@ -195,6 +211,23 @@ void DQuickBackdropBlitter::setOffscreen(bool newOffscreen)
         Q_EMIT offscreenChanged();
 }
 
+bool DQuickBackdropBlitter::blitterEnabled() const
+{
+    return flags().testFlag(ItemHasContents);
+}
+
+void DQuickBackdropBlitter::setBlitterEnabled(bool newBlitterEnabled)
+{
+    if (blitterEnabled() == newBlitterEnabled)
+        return;
+    setFlag(ItemHasContents, newBlitterEnabled);
+
+    D_D(DQuickBackdropBlitter);
+    d->onBlitterEnabledChanged();
+
+    Q_EMIT blitterEnabledChanged();
+}
+
 void DQuickBackdropBlitter::invalidateSceneGraph()
 {
     D_D(DQuickBackdropBlitter);
@@ -207,6 +240,7 @@ static void onTextureChanged(DBackdropNode *node, void *data) {
     if (!d->tp)
         return;
 
+    const bool textureChanged = node->texture() != d->tp->texture();
     d->tp->setTexture(node->texture());
 
     struct Notifer : public QRunnable {
@@ -220,8 +254,9 @@ static void onTextureChanged(DBackdropNode *node, void *data) {
 
     auto notifer = new Notifer();
     notifer->tp = d->tp;
-    // ###
-    // d->content->window()->scheduleRenderJob(notifer, QQuickWindow::BeforeSynchronizingStage);
+
+    if (textureChanged)
+        d->content->window()->scheduleRenderJob(notifer, QQuickWindow::BeforeSynchronizingStage);
 }
 
 QSGNode *DQuickBackdropBlitter::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *oldData)
@@ -235,7 +270,7 @@ QSGNode *DQuickBackdropBlitter::updatePaintNode(QSGNode *oldNode, QQuickItem::Up
     }
 
     D_D(DQuickBackdropBlitter);
-    if (window()->graphicsApi() == QSGRendererInterface::Software) {
+    if (DQMLGlobalObject::isSoftwareRender()) {
         node = DBackdropNode::createSoftwareNode(this);
     } else {
         node = DBackdropNode::createRhiNode(this);

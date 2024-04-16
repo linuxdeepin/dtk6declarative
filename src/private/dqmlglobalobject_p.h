@@ -178,7 +178,7 @@ public:
     bool hasBlurWindow() const;
     bool hasComposite() const;
     bool hasNoTitlebar() const;
-    bool isSoftwareRender() const;
+    static bool isSoftwareRender();
 
     DWindowManagerHelper::WMName windowManagerName() const;
     QString windowManagerNameString() const;
