@@ -54,6 +54,19 @@ void FloatingMessageContainer::setDuration(int duration)
     Q_EMIT durationChanged();
 }
 
+bool FloatingMessageContainer::immediateClose() const
+{
+    return m_immediateClose;
+}
+
+void FloatingMessageContainer::setImmediateClose(bool immediateClose)
+{
+     if (m_immediateClose == immediateClose)
+         return;
+
+     m_immediateClose = immediateClose;
+}
+  
 void FloatingMessageContainer::close()
 {
     if (auto manager = qobject_cast<MessageManager *>(parent())) {
@@ -188,9 +201,10 @@ void MessageManager::ensureLayout()
         QQmlComponent columnCom(qmlEngine(parent()));
         columnCom.setData("import QtQuick 2.11\n"
                           "Column {\n"
+                          "  spacing: 0\n"
                           "  anchors {\n"
                           "      bottom: parent.bottom\n"
-                          "      bottomMargin: 10;\n"
+                          "      bottomMargin: 20;\n"
                           "      horizontalCenter: parent.horizontalCenter\n"
                           "  }\n"
                           "}\n", QUrl());
@@ -307,7 +321,11 @@ void MessageManager::timerEvent(QTimerEvent *e)
         killTimer(e->timerId());
         e->accept();
         if (auto container = item.second) {
-            close(container);
+            if (container->immediateClose()) {
+                close(container);
+            } else {
+                Q_EMIT container->delayClose();
+            }
         }
         break;
     }
