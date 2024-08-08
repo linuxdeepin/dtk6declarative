@@ -63,6 +63,7 @@
         <file>qml/private/ButtonPanel.qml</file>
         <file>qml/ActionButton.qml</file>
         <file>qml/ItemDelegate.qml</file>
+        <file>qml/ListView.qml</file>
         <file>qml/CheckDelegate.qml</file>
         <file>qml/TipsSlider.qml</file>
         <file>qml/SliderTipItem.qml</file>
@@ -109,6 +110,8 @@
         <file>qml/ButtonIndicator.qml</file>
         <file>qml/EmbeddedProgressBar.qml</file>
         <file>qml/WaterProgressBar.qml</file>
+        <file>qml/ControlGroup.qml</file>
+        <file>qml/ControlGroupItem.qml</file>
         <file>qml/private/ProgressBarImpl.qml</file>
         <file>qml/private/ProgressBarPanel.qml</file>
         <file>qml/PlaceholderText.qml</file>
