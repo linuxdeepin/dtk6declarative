@@ -46,7 +46,10 @@
         <file alias="built-in-icons/slider_point_left.dci">icons/bloom/slider_point_left.dci</file>
         <file alias="built-in-icons/slider_round_hor.dci">icons/bloom/slider_round_hor.dci</file>
         <file alias="built-in-icons/slider_round_ver.dci">icons/bloom/slider_round_ver.dci</file>
-        <file alias="built-in-icons/switch_button.dci">icons/bloom/switch_button.dci</file>
+        <file alias="built-in-icons/switch_on.dci">icons/bloom/switch_on.dci</file>
+        <file alias="built-in-icons/switch_off.dci">icons/bloom/switch_off.dci</file>
+        <file alias="built-in-icons/switch_on_static.dci">icons/bloom/switch_on_static.dci</file>
+        <file alias="built-in-icons/switch_off_static.dci">icons/bloom/switch_off_static.dci</file>
         <file alias="built-in-icons/slider_point_up.dci">icons/bloom/slider_point_up.dci</file>
         <file alias="built-in-icons/checkbox_mix.dci">icons/bloom/checkbox_mix.dci</file>
         <file alias="built-in-icons/checkbox_checked.dci">icons/bloom/checkbox_checked.dci</file>
@@ -86,6 +89,8 @@
         <file alias="built-in-icons/list_delete.dci">icons/bloom/list_delete.dci</file>
         <file alias="built-in-icons/menu_arrow.dci">icons/bloom/menu_arrow.dci</file>
         <file alias="built-in-icons/menu_select.dci">icons/bloom/menu_select.dci</file>
+        <file alias="built-in-icons/item_checked.dci">icons/bloom/item_checked.dci</file>
+        <file alias="built-in-icons/item_unchecked.dci">icons/bloom/item_unchecked.dci</file>
         <file alias="built-in-icons/window_sidebar.dci">icons/bloom/window_sidebar.dci</file>
         <file alias="built-in-icons/action_add.dci">icons/bloom/action_add.dci</file>
         <file alias="built-in-icons/radio_checked.dci">icons/bloom/radio_checked.dci</file>

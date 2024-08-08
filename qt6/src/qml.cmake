@@ -52,6 +52,7 @@ set(QML_DTK_CONTROLS
     "qml/ComboBox.qml"
     "qml/ActionButton.qml"
     "qml/ItemDelegate.qml"
+    "qml/ListView.qml"
     "qml/CheckDelegate.qml"
     "qml/TipsSlider.qml"
     "qml/SliderTipItem.qml"
@@ -96,6 +97,9 @@ set(QML_DTK_CONTROLS
     "qml/EmbeddedProgressBar.qml"
     "qml/WaterProgressBar.qml"
     "qml/PlaceholderText.qml"
+    "qml/ControlGroup.qml"
+    "qml/ControlGroupItem.qml"
+    "qml/DragItemsImage.qml"
 )
 
 foreach(QML_FILE ${QML_DTK_CONTROLS})

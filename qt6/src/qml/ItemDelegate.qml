@@ -1,12 +1,13 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022-2024 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-import QtQuick 2.11
+import QtQuick
 import QtQuick.Templates as T
 import QtQuick.Layouts 1.11
 import org.deepin.dtk 1.0 as D
 import org.deepin.dtk.style 1.0 as DS
+import org.deepin.dtk.private 1.0 as P
 
 T.ItemDelegate {
     id: control
@@ -17,6 +18,12 @@ T.ItemDelegate {
     property Component content
     property D.Palette checkedTextColor: DS.Style.checkedButton.text
     property int corners: D.RoundRectangle.TopLeftCorner | D.RoundRectangle.TopRightCorner | D.RoundRectangle.BottomLeftCorner | D.RoundRectangle.BottomRightCorner
+    property bool dragActive: false
+    // drag
+    property bool enableDrag: false
+    Drag.mimeData: { "text/plain": control.text }
+    Drag.dragType: Drag.Automatic
+
     function getCornersForBackground(index, count) {
         if (count <= 1)
             return D.RoundRectangle.TopLeftCorner | D.RoundRectangle.TopRightCorner | D.RoundRectangle.BottomLeftCorner | D.RoundRectangle.BottomRightCorner
@@ -35,7 +42,7 @@ T.ItemDelegate {
     spacing: DS.Style.control.spacing
     checkable: true
     autoExclusive: true
-    palette.windowText: checked && !control.cascadeSelected ? D.ColorSelector.checkedTextColor : undefined
+    palette.windowText: checked && !control.cascadeSelected && control.backgroundVisible && !dragActive? D.ColorSelector.checkedTextColor : undefined
 
     D.DciIcon.mode: D.ColorSelector.controlState
     D.DciIcon.theme: D.ColorSelector.controlTheme
@@ -83,12 +90,13 @@ T.ItemDelegate {
     }
 
     background: Item {
+        visible: backgroundVisible
         implicitWidth: DS.Style.itemDelegate.width
         implicitHeight: DS.Style.itemDelegate.height
 
         Loader {
             anchors.fill: parent
-            active: checked && !control.cascadeSelected
+            active: checked && !control.cascadeSelected && !dragActive
             sourceComponent: HighlightPanel {}
         }
 
@@ -104,12 +112,57 @@ T.ItemDelegate {
 
         Loader {
             anchors.fill: parent
-            active: !checked && control.backgroundVisible
+            active: !control.ListView.view && !checked && control.backgroundVisible
             sourceComponent: D.RoundRectangle {
                 color: DS.Style.itemDelegate.normalColor
                 radius: DS.Style.control.radius
                 corners: control.corners
             }
         }
+
+        Loader {
+            anchors.fill: parent
+            active: dragActive
+            sourceComponent: Rectangle {
+                border.color: Qt.rgba(0, 0, 0, 0.09)
+                radius: DS.Style.control.radius
+            }
+        }
+    }
+
+    DragHandler {
+        id: dragHandler
+        enabled: enableDrag
+        onActiveChanged: {
+            if (active) {
+                let dragItem = control.ListView.view.dragItem
+                if (!dragItem)
+                    return
+
+                let md = JSON.stringify(dragItem.Drag.mimeData)
+
+                if (md.length > 2) // '{}'
+                    control.Drag.mimeData = dragItem.Drag.mimeData
+
+                dragItem.grabToImage(function(result) {
+                    control.Drag.imageSource = result.url;
+                    control.Drag.hotSpot = Qt.point(dragItem.width / 2, dragItem.height / 2)
+                    control.Drag.active = true
+                })
+            }
+        }
+    }
+
+    onHoveredChanged: {
+        if (checked || control.cascadeSelected || !backgroundVisible || dragActive)
+            return
+
+        if (ListView.view)
+            ListView.view.setHoverItem(control.hovered ? control : null)
+    }
+
+    onCheckedChanged: {
+        if (ListView.view)
+            ListView.view.updateCheckedItems()
     }
 }
