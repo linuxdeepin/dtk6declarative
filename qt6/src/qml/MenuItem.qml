@@ -43,6 +43,9 @@ T.MenuItem {
         text: control.text
         font: control.font
         color: control.palette.windowText
+        Behavior on color {
+            ColorAnimation { duration: control.hovered ? 100 : 0; }
+        }
         icon: D.DTK.makeIcon(control.icon, control.D.DciIcon)
     }
 
@@ -100,16 +103,6 @@ T.MenuItem {
             sourceComponent: Rectangle {
                 color: control.D.ColorSelector.subMenuBackgroundColor
                 radius: DS.Style.control.radius
-            }
-        }
-
-        Loader {
-            anchors.fill: parent
-            active: control.down || control.highlighted
-            sourceComponent: Rectangle {
-                property D.Palette backgroundColor: DS.Style.highlightPanel.background
-                color: D.ColorSelector.backgroundColor
-                radius: 1 // TODO can't display background when using dtk's InWindowBlur.
             }
         }
     }

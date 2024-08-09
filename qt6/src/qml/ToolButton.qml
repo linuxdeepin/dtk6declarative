@@ -10,7 +10,7 @@ import org.deepin.dtk.private 1.0 as P
 
 T.ToolButton {
     id: control
-    property D.Palette textColor: checked ? DS.Style.checkedButton.text : (highlighted ? DS.Style.highlightedButton.text : DS.Style.button.text)
+    property D.Palette textColor: checked ? DS.Style.highlightedButton.text : (highlighted ? DS.Style.highlightedButton.text : DS.Style.button.text)
 
     implicitWidth: DS.Style.control.implicitWidth(control)
     implicitHeight: DS.Style.control.implicitHeight(control)
@@ -66,10 +66,46 @@ T.ToolButton {
         }
     }
 
+    states: [
+        State {
+            name: "hovered"
+            when: control.hovered && !control.checked
+            PropertyChanges {
+                target: contentItem
+                scale : 1.2
+            }
+            PropertyChanges {
+                target: background
+                scale : 1.0
+            }
+
+        },
+        State {
+            name: "checked"
+            when: control.checked
+            PropertyChanges {
+                target: contentItem
+                scale : 1.0
+            }
+        }
+    ]
+
+    transitions: Transition {
+        NumberAnimation { properties: "scale"; easing.type: Easing.InOutQuad }
+    }
+
     background: P.ButtonPanel {
+        visible: control.state === "hovered"
+        scale : 0.9
         implicitWidth: DS.Style.toolButton.width
         implicitHeight: DS.Style.toolButton.height
         button: control
         outsideBorderColor: null
+        color1: D.Palette {
+            normal {
+                common: Qt.rgba(0, 0, 0, 0.1)
+            }
+        }
+        color2 : color1
     }
 }
