@@ -7,7 +7,7 @@ import org.deepin.dtk 1.0 as D
 
 QtObject {
     property QtObject control: QtObject {
-        property int radius: 8
+        property int radius: 6
         property int spacing: 6
         property int padding: 6
         property int borderWidth: 1
@@ -185,6 +185,10 @@ QtObject {
 
         property D.Palette text: D.Palette {
             normal {
+                common: Qt.rgba(0, 0, 0, 0.7)
+                crystal: Qt.rgba(0, 0, 0, 0.7)
+            }
+            hovered {
                 common: Qt.rgba(0, 0, 0, 1)
                 crystal: Qt.rgba(0, 0, 0, 1)
             }
@@ -630,7 +634,7 @@ QtObject {
 
     property QtObject menu: QtObject {
         property int padding: 0
-        property int radius: D.DTK.platformTheme.windowRadius < 0 ? 18 : D.DTK.platformTheme.windowRadius
+        property int radius: D.DTK.platformTheme.windowRadius < 0 ? 12 : D.DTK.platformTheme.windowRadius
         property int margins: 10
         property int overlap: 1
 
@@ -667,6 +671,17 @@ QtObject {
 
         property D.Palette subMenuOpenedBackground: D.Palette {
             normal: Qt.rgba(0, 0, 0, 0.15)
+        }
+
+        // the highlight color of main menu item, when submenu is opened.
+        property D.Palette submenuOpenedItemHighlight: D.Palette {
+            normal: Qt.rgba(0, 0, 0, 0.15)
+            normalDark: Qt.rgba(1, 1, 1, 0.2)
+        }
+
+        property D.Palette itemHighlightShadow: D.Palette {
+            normal: Qt.rgba(0, 0, 0, 0.2)
+            normalDark: Qt.rgba(1, 1, 1, 0.1)
         }
 
         property D.Palette itemText: D.Palette {
@@ -814,7 +829,7 @@ QtObject {
         }
 
         property D.Palette handleGradientColor:  D.Palette {
-            normal: D.DTK.makeColor(D.Color.Highlight).hue(-10).saturation(+40).lightness(+20)
+            normal: D.DTK.makeColor(D.Color.Highlight).hue(-0).saturation(+30).lightness(+30)
         }
     }
 
