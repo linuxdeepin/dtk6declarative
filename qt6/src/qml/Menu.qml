@@ -84,6 +84,7 @@ T.Menu {
                 view.highlightMoveVelocity: -1
 
                 view.highlight: Rectangle {
+                    id: highlightRect
                     anchors.left: parent ? parent.left : undefined
                     anchors.right: parent ? parent.right : undefined
                     anchors.leftMargin: 6
@@ -91,6 +92,16 @@ T.Menu {
                     scale: 0.9
                     property D.Palette backgroundColor: DS.Style.highlightPanel.background
                     color: D.ColorSelector.backgroundColor
+                    property D.Palette submenuOpenedItemHighlightColor: DS.Style.menu.submenuOpenedItemHighlight
+                    property D.Palette itemHighlightShadowColor: DS.Style.menu.itemHighlightShadow
+                    color: {
+                        let item = control.itemAt(control.currentIndex)
+                        if (item && item.subMenu) {
+                            return D.ColorSelector.submenuOpenedItemHighlightColor
+                        } else {
+                            return D.ColorSelector.backgroundColor
+                        }
+                    }
                     radius: 6
                     Component.onCompleted: {
                         scale = 1.0
@@ -99,6 +110,17 @@ T.Menu {
                         NumberAnimation { duration: 100 }
                     }
 
+                    BoxInsetShadow {
+                        visible: highlightRect.color === highlightRect.D.ColorSelector.backgroundColor
+                        anchors.fill: parent
+                        z: DTK.AboveOrder
+                        cornerRadius: parent.radius
+                        shadowOffsetX: 0
+                        shadowOffsetY: -1
+                        shadowBlur: 1
+                        spread: 1
+                        shadowColor: highlightRect.D.ColorSelector.itemHighlightShadowColor
+                    }
                 }
             }
             Loader {
