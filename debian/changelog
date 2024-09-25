@@ -1,3 +1,9 @@
+dtk6declarative (6.0.21) unstable; urgency=medium
+
+  * sync: from linuxdeepin/dtkdeclarative
+
+ -- Deepin Packages Builder <packages@deepin.org>  Wed, 25 Sep 2024 06:56:24 +0000
+
 dtk6declarative (6.0.20) unstable; urgency=medium
 
   * release 6.0.20
