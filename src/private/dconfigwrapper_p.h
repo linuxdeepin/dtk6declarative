@@ -11,6 +11,7 @@
 
 DCORE_BEGIN_NAMESPACE
 class DConfig;
+class DThreadUtils;
 DCORE_END_NAMESPACE
 
 class DConfigWrapperMetaObject;
@@ -48,8 +49,14 @@ public:
     virtual void componentComplete() override;
 
 private:
+    void initializeProperties();
+
     friend DConfigWrapperMetaObject;
-    DTK_CORE_NAMESPACE::DConfig *impl;
+    DConfigWrapperMetaObject *mo = nullptr;
+    std::unique_ptr<DTK_CORE_NAMESPACE::DConfig> impl;
+    QStringList configKeyList;
+    QStringList nonDefaultValueKeyList;
+
     QString m_name;
     QString m_subpath;
     Q_DISABLE_COPY(DConfigWrapper)
