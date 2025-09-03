@@ -31,7 +31,7 @@ T.ScrollBar {
         State {
             name: "normal"
             property bool moving: control.active && !control.pressed && !control.hovered
-            when: control.policy === T.ScrollBar.AlwaysOn || ( moving && control.size < 1.0)
+            when: (control.policy === T.ScrollBar.AlwaysOn && !control.hovered && !control.pressed) || (moving && control.size < 1.0)
             PropertyChanges {
                 target: control.contentItem
                 implicitWidth: DS.Style.scrollBar.width
