@@ -449,8 +449,8 @@ QtObject {
         }
 
         property D.Palette placeholderText: D.Palette {
-            normal: Qt.rgba(0.33, 0.33, 0.33, 0.4)
-            normalDark: Qt.rgba(1, 1, 1, 0.3)
+            normal: Qt.rgba(0, 0, 0, 0.7)
+            normalDark: Qt.rgba(1, 1, 1, 0.7)
         }
     }
 
@@ -615,6 +615,9 @@ QtObject {
         property int connectorHeight: 12
         property int verticalPadding: 4
         property int horizontalPadding: 10
+        property int width: 30
+        property int height: 24
+        property int radius: 6
 
         property D.Palette text: D.Palette {
             normal: ("#e15736")
