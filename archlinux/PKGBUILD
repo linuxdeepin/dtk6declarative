@@ -1,6 +1,6 @@
 # Maintainer: zccrs <zhangjide@deepin.org>
 pkgname=dtk6declarative-git
-pkgver=6.0.44
+pkgver=6.0.45
 pkgrel=1
 sourcename=dtk6declarative
 sourcetars=("$sourcename"_"$pkgver".tar.xz)
